@@ -1,0 +1,14 @@
+.prefillItem {
+    cursor: pointer;
+    padding: var(--spacing-third) var(--spacing-third);
+    text-align: left;
+    width: 100%;
+
+    &:hover {
+        background-color: var(--color-dark-grey);
+
+        span {
+            color: var(--color-white);
+        }
+    }
+}

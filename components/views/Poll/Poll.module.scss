@@ -1,0 +1,14 @@
+@import 'inputs';
+
+.container {
+    margin: 0 auto;
+    max-width: 550px;
+    padding: var(--spacing-single);
+}
+
+.input {
+    @extend %inputBase;
+    font-size: var(--font-size-medium-small);
+    padding: var(--spacing-sixth) var(--spacing-third);
+    width: 100%;
+}

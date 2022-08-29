@@ -1,0 +1,23 @@
+@import 'inputs';
+@import 'mixins';
+
+.container {
+    margin-top: var(--spacing-single);
+}
+
+.prefillContainer {
+    @include breakpoint('small') {
+        position: relative;
+    }
+}
+
+.input {
+    @extend %inputBase;
+    font-size: var(--font-size-medium-small);
+    padding: var(--spacing-sixth) var(--spacing-third);
+    width: 100%;
+}
+
+.caption {
+    margin-bottom: var(--spacing-third);
+}

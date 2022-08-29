@@ -1,0 +1,38 @@
+%inputFocus {
+    border-color: var(--color-light-grey);
+    box-shadow: 0 0 1px 3px rgba(59, 153, 252, 0.7);
+    box-shadow: 0 0 0 3px -moz-mac-focusring;
+    outline: none;
+}
+
+%inputBase {
+    appearance: none;
+    background-color: var(--color-white);
+    border: 2px solid var(--color-light-grey);
+    border-radius: 4px;
+    box-shadow: var(--box-shadow-input);
+    box-sizing: border-box;
+    color: var(--color-not-black);
+    display: block;
+    font-size: var(--font-size-normal);
+    font-family: var(--font-sans);
+    font-smoothing: antialiased;
+    font-weight: var(--font-weight-sans-medium);
+    line-height: 1.3;
+    margin: 0;
+    max-width: 100%;
+    transition: all 200ms ease;
+
+    &:hover {
+        border-color: var(--color-medium-grey);
+    }
+
+    &:focus {
+        @extend %inputFocus;
+        color: var(--color-not-black);
+    }
+
+    &::placeholder {
+        color: var(--color-not-black);
+    }
+}

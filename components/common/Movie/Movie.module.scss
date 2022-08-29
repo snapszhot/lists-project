@@ -1,0 +1,32 @@
+.titleWrapper {
+    align-items: baseline;
+    color: var(--color-not-black);
+    display: inline-flex;
+    flex-wrap: wrap;
+    font-size: var(--font-size-medium-small);
+    font-weight: var(--font-weight-sans-bold);
+}
+
+.title {
+    margin-right: var(--spacing-sixth);
+}
+
+.director,
+.origTitle,
+.year {
+    color: var(--color-dark-grey);
+    font-size: var(--font-size-small);
+}
+
+.director {
+    display: block;
+}
+
+.origTitle {
+    margin-right: var(--spacing-third);
+}
+
+.year {
+    font-weight: var(--font-weight-sans-normal);
+    margin-right: var(--spacing-third);
+}
