@@ -1,0 +1,33 @@
+@import 'inputs';
+
+.action {
+    align-items: center;
+    appearance: none;
+    border: none;
+    border-radius: 5px;
+    cursor: var(--cursor, pointer);
+    display: flex;
+    justify-content: center;
+    outline: none;
+    padding: var(--spacing-quarter) var(--spacing-sixth);
+    touch-action: none;
+    transition: all 200ms ease;
+    -webkit-tap-highlight-color: transparent;
+
+    &:focus-visible {
+        @extend %inputFocus;
+    }
+
+    &:hover {
+        background-color: var(--color-lightest-grey);
+
+        svg {
+            fill: var(--color-dark-grey);
+        }
+    }
+
+    svg {
+        fill: var(--color-medium-grey);
+        transition: fill 200ms ease;
+    }
+}

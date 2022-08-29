@@ -7,7 +7,6 @@ import Prefills from './Prefills'
 import styles from './List.module.scss'
 
 export default function List({ list, prefills, setList }) {
-    const [showPrefill, setShowPrefill] = useState(false)
     const [query, setQuery] = useState('')
     const [error, setError] = useState(null)
 
@@ -17,7 +16,6 @@ export default function List({ list, prefills, setList }) {
     }
 
     const handlePrefillSelect = item => {
-        console.log(item)
         setQuery('')
 
         if (
@@ -28,7 +26,7 @@ export default function List({ list, prefills, setList }) {
                     it.releaseYear === item.releaseYear
             )
         ) {
-            setError('You cannot add the same film multiple times.')
+            setError('You cannot vote for the same film multiple times.')
         } else {
             setList([...list, item])
             setError(null)
@@ -45,6 +43,7 @@ export default function List({ list, prefills, setList }) {
             <div className={styles.prefillContainer}>
                 <input
                     className={styles.input}
+                    disabled={list.length >= 25}
                     name='search'
                     onChange={handleChange}
                     placeholder='Search for a movie or director...'
@@ -58,7 +57,7 @@ export default function List({ list, prefills, setList }) {
                     value={query}
                 />
             </div>
-            <ListItems list={list} />
+            <ListItems list={list} setList={setList} />
         </div>
     )
 }

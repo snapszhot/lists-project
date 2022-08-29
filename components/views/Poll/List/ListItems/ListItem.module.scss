@@ -1,0 +1,53 @@
+@import 'inputs';
+
+.listItemWrapper {
+    display: flex;
+    margin: var(--spacing-third) 0;
+    transform: translate3d(var(--translate-x, 0), var(--translate-y, 0), 0)
+        scaleX(var(--scale-x, 1)) scaleY(var(--scale-y, 1));
+    transform-origin: 0 0;
+    touch-action: manipulation;
+}
+
+.listItem {
+    align-items: center;
+    background-color: var(--color-white);
+    border: 2px solid var(--color-light-grey);
+    border-radius: 3px;
+    display: flex;
+    flex-grow: 1;
+    padding: var(--spacing-third) var(--spacing-half);
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+
+    &:focus-visible {
+        @extend %inputFocus;
+    }
+
+    &.dragging {
+        opacity: var(--dragging-opacity, 0.5);
+        z-index: 0;
+    }
+}
+
+.listItemNum {
+    color: var(--color-dark-grey);
+    font-size: var(--font-size-medium-large);
+    font-weight: var(--font-weight-sans-bold);
+    margin-right: var(--spacing-half);
+}
+
+.actions {
+    display: flex;
+    margin-left: auto;
+}
+
+.handle svg {
+    height: 18px;
+    width: 18px;
+}
+
+.remove svg {
+    height: 12px;
+    width: 12px;
+}

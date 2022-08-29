@@ -1,3 +1,5 @@
 export { default as ErrorMessage } from './ErrorMessage'
+export { default as Handle } from './Handle'
 export { default as InputLabel } from './InputLabel'
 export { default as Movie } from './Movie'
+export { default as Remove } from './Remove'
