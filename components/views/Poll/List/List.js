@@ -9,6 +9,7 @@ import styles from './List.module.scss'
 export default function List({ list, prefills, setList }) {
     const [query, setQuery] = useState('')
     const [error, setError] = useState(null)
+    const hitLimit = list.length >= 25
 
     const handleChange = event => {
         event.preventDefault()
@@ -43,10 +44,14 @@ export default function List({ list, prefills, setList }) {
             <div className={styles.prefillContainer}>
                 <input
                     className={styles.input}
-                    disabled={list.length >= 25}
+                    disabled={hitLimit}
                     name='search'
                     onChange={handleChange}
-                    placeholder='Search for a movie or director...'
+                    placeholder={
+                        hitLimit
+                            ? 'You have selected the maximum number of films.'
+                            : 'Search for a movie or director...'
+                    }
                     type='text'
                     value={query}
                 />

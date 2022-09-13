@@ -30,7 +30,7 @@ export default function Poll({ prefills }) {
     return (
         <div className={styles.container}>
             <main>
-                <h1>1965 Poll</h1>
+                <h1 className={styles.title}>1965 Poll</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <List list={list} setList={setList} prefills={prefills} />
                     <div>
@@ -38,11 +38,16 @@ export default function Poll({ prefills }) {
                         <input
                             className={styles.input}
                             id='username'
+                            placeholder='Enter your criterionforum.org username'
                             {...register('username')}
                         />
                     </div>
-                    <div>
-                        <input type='submit' value='Submit' />
+                    <div className={styles.actions}>
+                        <input
+                            className={styles.submit}
+                            type='submit'
+                            value='Submit'
+                        />
                     </div>
                 </form>
             </main>

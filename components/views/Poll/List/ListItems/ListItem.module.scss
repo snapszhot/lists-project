@@ -32,9 +32,13 @@
 
 .listItemNum {
     color: var(--color-dark-grey);
-    font-size: var(--font-size-medium-large);
+    font-size: var(--font-size-medium-small);
     font-weight: var(--font-weight-sans-bold);
-    margin-right: var(--spacing-half);
+    font-feature-settings: 'tnum';
+    font-variant-numeric: tabular-nums;
+    margin-right: var(--spacing-third);
+    min-width: 25px;
+    text-align: center;
 }
 
 .actions {
@@ -42,9 +46,13 @@
     margin-left: auto;
 }
 
-.handle svg {
-    height: 18px;
-    width: 18px;
+.handle {
+    margin-left: var(--spacing-third);
+
+    svg {
+        height: 18px;
+        width: 18px;
+    }
 }
 
 .remove svg {

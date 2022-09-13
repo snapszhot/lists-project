@@ -5,10 +5,16 @@
     margin-top: var(--spacing-single);
 }
 
+.caption {
+    margin-bottom: 0;
+}
+
 .prefillContainer {
-    @include breakpoint('small') {
-        position: relative;
-    }
+    background-color: var(--color-white);
+    padding: var(--spacing-third) 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .input {
@@ -16,8 +22,4 @@
     font-size: var(--font-size-medium-small);
     padding: var(--spacing-sixth) var(--spacing-third);
     width: 100%;
-}
-
-.caption {
-    margin-bottom: var(--spacing-third);
 }
