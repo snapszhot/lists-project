@@ -1,3 +1,4 @@
+export { default as CircleLoader } from './CircleLoader'
 export { default as ErrorMessage } from './ErrorMessage'
 export { default as Handle } from './Handle'
 export { default as InputLabel } from './InputLabel'

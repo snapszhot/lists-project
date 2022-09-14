@@ -15,6 +15,10 @@
     font-size: var(--font-size-medium-small);
     padding: var(--spacing-sixth) var(--spacing-third);
     width: 100%;
+
+    &.error {
+        border-color: var(--color-red);
+    }
 }
 
 .actions {

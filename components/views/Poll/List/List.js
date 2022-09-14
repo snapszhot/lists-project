@@ -6,7 +6,7 @@ import ListItems from './ListItems'
 import Prefills from './Prefills'
 import styles from './List.module.scss'
 
-export default function List({ list, prefills, setList }) {
+export default function List({ list, prefills, setList, setNumError }) {
     const [query, setQuery] = useState('')
     const [error, setError] = useState(null)
     const hitLimit = list.length >= 25
@@ -18,6 +18,11 @@ export default function List({ list, prefills, setList }) {
 
     const handlePrefillSelect = item => {
         setQuery('')
+        const newList = [...list, item]
+
+        if (newList.length >= 10 && newList.length <= 25) {
+            setNumError(null)
+        }
 
         if (
             list.some(
@@ -28,8 +33,8 @@ export default function List({ list, prefills, setList }) {
             )
         ) {
             setError('You cannot vote for the same film multiple times.')
-        } else {
-            setList([...list, item])
+        } else if (newList.length <= 25) {
+            setList(newList)
             setError(null)
         }
     }
@@ -71,4 +76,5 @@ List.propTypes = {
     list: PropTypes.array,
     prefills: PropTypes.array,
     setList: PropTypes.func,
+    setNumError: PropTypes.func,
 }
