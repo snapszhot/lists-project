@@ -12,7 +12,7 @@ export async function getStaticProps({ preview = false }) {
     // Next.js requirement. See https://github.com/vercel/next.js/discussions/32236#discussioncomment-3202094
     const dataPath = path.join(
         process.cwd(),
-        'public/prefills/2022-08-11-clean-encoding.csv'
+        'public/prefills/1columncsv9-10-22.csv'
     )
     const [prefills] = await Promise.all([getPrefills(dataPath)])
 
