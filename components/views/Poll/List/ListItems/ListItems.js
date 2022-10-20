@@ -27,9 +27,9 @@ export default function ListItems({
     wrapperStyle = () => ({}),
 }) {
     const [activeId, setActiveId] = useState(null)
-    const getIndex = activeId => list.findIndex(it => it.movie === activeId)
+    const getIndex = activeId => list.findIndex(it => it.id === activeId)
     const activeIndex = activeId ? getIndex(activeId) : -1
-    const itemIds = list.map(item => item.movie)
+    const itemIds = list.map(item => item.id)
 
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -39,7 +39,7 @@ export default function ListItems({
     )
 
     const handleRemove = id =>
-        setList(items => items.filter(item => item.movie !== id))
+        setList(items => items.filter(item => item.id !== id))
 
     const handleDragStart = ({ active }) => {
         if (!active) return
@@ -50,8 +50,8 @@ export default function ListItems({
     const handleDragEnd = ({ active, over }) => {
         if (active.id !== over.id) {
             setList(items => {
-                const oldIndex = items.findIndex(it => it.movie === active.id)
-                const newIndex = items.findIndex(it => it.movie === over.id)
+                const oldIndex = items.findIndex(it => it.id === active.id)
+                const newIndex = items.findIndex(it => it.id === over.id)
 
                 return arrayMove(items, oldIndex, newIndex)
             })
@@ -77,7 +77,7 @@ export default function ListItems({
                             item={item}
                             number={index + 1}
                             key={index}
-                            id={item.movie}
+                            id={item.id}
                             index={index}
                             style={getItemStyles}
                             wrapperStyle={wrapperStyle}

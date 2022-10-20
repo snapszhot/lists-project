@@ -10,7 +10,7 @@ import { CircleLoader, ErrorMessage, InputLabel } from '@components/common'
 import List from './List'
 import styles from './Poll.module.scss'
 
-export default function Poll({ prefills }) {
+export default function Poll({ end_year, start_year, title }) {
     const router = useRouter()
     const [list, setList] = useState([])
     const [numError, setNumError] = useState(null)
@@ -20,16 +20,18 @@ export default function Poll({ prefills }) {
         register,
         reset,
     } = useForm()
+    const MAX_FILMS = process.env.NEXT_PUBLIC_MAX_FILMS
+    const MIN_FILMS = process.env.NEXT_PUBLIC_MIN_FILMS
 
     const onSubmit = async values => {
-        if (list.length < 10 || list.length > 25) {
+        if (list.length < MIN_FILMS || list.length > MAX_FILMS) {
             setNumError(
-                'You must vote for at least 10 and no more than 25 films.'
+                `You must vote for at least ${MIN_FILMS} and no more than ${MAX_FILMS} films.`
             )
         } else {
             console.log(list) // eslint-disable-line no-console
             setNumError(null)
-            await axios.post('/api/supabase', {
+            await axios.post('/api/vote', {
                 poll_id: '1965',
                 username: values.username,
                 votes: list,
@@ -42,7 +44,7 @@ export default function Poll({ prefills }) {
     return (
         <div className={styles.container}>
             <main>
-                <h1 className={styles.title}>1965 Poll</h1>
+                <h1 className={styles.title}>{title}</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div>
                         <InputLabel htmlFor='username' title='Username' />
@@ -60,10 +62,11 @@ export default function Poll({ prefills }) {
                         )}
                     </div>
                     <List
+                        endYear={end_year || start_year}
                         list={list}
-                        prefills={prefills}
                         setList={setList}
                         setNumError={setNumError}
+                        startYear={start_year}
                     />
                     <div className={styles.actions}>
                         <button
@@ -82,5 +85,7 @@ export default function Poll({ prefills }) {
 }
 
 Poll.propTypes = {
-    prefills: PropTypes.array,
+    end_year: PropTypes.number,
+    start_year: PropTypes.number,
+    title: PropTypes.string,
 }

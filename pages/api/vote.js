@@ -4,13 +4,16 @@ import supabase from '@lib/supabase-client'
 export default async function handler(req, res) {
     try {
         const { poll_id, username, votes } = req.body
-        const { data, error } = await supabase.from('votes').insert([
-            {
-                poll_id,
-                username,
-                votes,
-            },
-        ])
+        const { data, error } = await supabase
+            .from('votes')
+            .insert([
+                {
+                    poll_id,
+                    username,
+                    votes,
+                },
+            ])
+            .select()
 
         if (error) {
             throw error

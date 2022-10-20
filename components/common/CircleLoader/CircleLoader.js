@@ -21,6 +21,6 @@ CircleLoader.propTypes = {
 }
 
 CircleLoader.defaultProps = {
-    fill: 'var(--color-white)',
-    size: 20,
+    fill: 'var(--color-medium-grey)',
+    size: 16,
 }

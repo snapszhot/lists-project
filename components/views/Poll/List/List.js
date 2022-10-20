@@ -1,39 +1,88 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { ErrorMessage, InputLabel } from '@components/common'
+import axios from 'axios'
+import debouce from 'lodash.debounce'
+
+import { CircleLoader, ErrorMessage, InputLabel } from '@components/common'
 import ListItems from './ListItems'
 import Prefills from './Prefills'
 import styles from './List.module.scss'
 
-export default function List({ list, prefills, setList, setNumError }) {
-    const [query, setQuery] = useState('')
+export default function List({
+    endYear,
+    list,
+    setList,
+    setNumError,
+    startYear,
+}) {
     const [error, setError] = useState(null)
-    const hitLimit = list.length >= 25
+    const [loading, setLoading] = useState(false)
+    const [options, setOptions] = useState(null)
+    const [query, setQuery] = useState('')
+    const [showPrefill, setShowPrefill] = useState(false)
 
-    const handleChange = event => {
-        event.preventDefault()
-        setQuery(event.target.value)
+    const MAX_FILMS = process.env.NEXT_PUBLIC_MAX_FILMS
+    const MIN_FILMS = process.env.NEXT_PUBLIC_MIN_FILMS
+    const hitLimit = list.length >= MAX_FILMS
+
+    const searchAPI = async query => {
+        try {
+            const { data } = await axios({
+                url: '/api/search',
+                method: 'GET',
+                params: { endYear, query, startYear },
+            })
+
+            setOptions(data)
+            setError(null)
+            setLoading(false)
+        } catch (error) {
+            setError(
+                'We’re having some trouble searching. Please try again later.'
+            )
+            setLoading(false)
+        }
     }
 
-    const handlePrefillSelect = item => {
-        setQuery('')
-        const newList = [...list, item]
+    const handleChange = async event => {
+        event.preventDefault()
+        const { value } = event.target
+        const hasValue = value !== ''
 
-        if (newList.length >= 10 && newList.length <= 25) {
+        setQuery(value)
+        setLoading(true)
+        setShowPrefill(hasValue)
+
+        if (hasValue) {
+            debouncedSearch(value)
+        } else {
+            setLoading(false)
+        }
+    }
+
+    const debouncedSearch = useMemo(() => {
+        return debouce(searchAPI, 200)
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+    useEffect(() => {
+        return () => {
+            debouncedSearch.cancel()
+        }
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+    const handlePrefillSelect = item => {
+        const newList = [...list, item]
+        setShowPrefill(false)
+        setQuery('')
+
+        if (newList.length >= MIN_FILMS && newList.length <= MAX_FILMS) {
             setNumError(null)
         }
 
-        if (
-            list.some(
-                it =>
-                    it.movie === item.movie &&
-                    it.director === item.director &&
-                    it.releaseYear === item.releaseYear
-            )
-        ) {
+        if (list.some(it => it.id === item.id)) {
             setError('You cannot vote for the same film multiple times.')
-        } else if (newList.length <= 25) {
+        } else if (newList.length <= MAX_FILMS) {
             setList(newList)
             setError(null)
         }
@@ -47,24 +96,31 @@ export default function List({ list, prefills, setList, setNumError }) {
                 drag and drop them in the order of your choosing.
             </p>
             <div className={styles.prefillContainer}>
-                <input
-                    className={styles.input}
-                    disabled={hitLimit}
-                    name='search'
-                    onChange={handleChange}
-                    placeholder={
-                        hitLimit
-                            ? 'You have selected the maximum number of films.'
-                            : 'Search for a movie or director...'
-                    }
-                    type='text'
-                    value={query}
-                />
+                <div>
+                    <input
+                        className={styles.input}
+                        disabled={hitLimit}
+                        name='search'
+                        onChange={handleChange}
+                        placeholder={
+                            hitLimit
+                                ? 'You have selected the maximum number of films.'
+                                : 'Search for a movie or director...'
+                        }
+                        type='text'
+                        value={query}
+                    />
+                    {loading && (
+                        <div className={styles.loader}>
+                            <CircleLoader />
+                        </div>
+                    )}
+                </div>
                 {error && <ErrorMessage message={error} />}
                 <Prefills
                     handlePrefillSelect={handlePrefillSelect}
-                    options={prefills}
-                    value={query}
+                    options={options}
+                    showPrefill={showPrefill}
                 />
             </div>
             <ListItems list={list} setList={setList} />
@@ -73,8 +129,9 @@ export default function List({ list, prefills, setList, setNumError }) {
 }
 
 List.propTypes = {
+    endYear: PropTypes.number,
     list: PropTypes.array,
-    prefills: PropTypes.array,
     setList: PropTypes.func,
     setNumError: PropTypes.func,
+    startYear: PropTypes.number,
 }

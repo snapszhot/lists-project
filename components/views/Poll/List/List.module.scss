@@ -23,3 +23,12 @@
     padding: var(--spacing-sixth) var(--spacing-third);
     width: 100%;
 }
+
+.loader {
+    align-items: center;
+    bottom: 0;
+    display: flex;
+    position: absolute;
+    right: var(--spacing-half);
+    top: 0;
+}

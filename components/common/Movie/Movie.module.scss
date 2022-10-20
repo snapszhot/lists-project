@@ -11,11 +11,16 @@
     margin-right: var(--spacing-sixth);
 }
 
+.connector,
 .director,
-.origTitle,
-.year {
+.origTitle {
     color: var(--color-dark-grey);
     font-size: var(--font-size-small);
+}
+
+.connector {
+    font-weight: var(--font-weight-sans-normal);
+    margin-right: var(--spacing-third);
 }
 
 .director {
@@ -23,10 +28,5 @@
 }
 
 .origTitle {
-    margin-right: var(--spacing-third);
-}
-
-.year {
-    font-weight: var(--font-weight-sans-normal);
     margin-right: var(--spacing-third);
 }
