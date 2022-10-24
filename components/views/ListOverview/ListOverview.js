@@ -43,10 +43,10 @@ export default function ListOverview({
 }
 
 ListOverview.propTypes = {
-    description: PropTypes.object,
+    description: PropTypes.array,
     slug: PropTypes.string,
     show_results: PropTypes.bool,
     title: PropTypes.string,
     voting_begins: PropTypes.string,
-    voting_enabled: PropTypes.string,
+    voting_enabled: PropTypes.bool,
 }
