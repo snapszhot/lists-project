@@ -1,4 +1,4 @@
-import { getAllLists, getSingleList } from '@lib/prismic'
+import { getSingleList } from '@lib/prismic'
 
 import { ListOverview } from '@components/views'
 
@@ -6,31 +6,16 @@ export default function ListOverviewPage(props) {
     return <ListOverview {...props} />
 }
 
-export async function getStaticProps({ params, preview = false }) {
+export async function getServerSideProps({ params, preview = false, req }) {
+    const ballotUid = req?.cookies[`list-${params.uid}`] || null
     const list = await getSingleList(preview, params.uid)
 
     return {
         props: {
             ...list,
+            ballotUid,
             preview,
             slug: params.uid,
         },
-        revalidate: 60,
-    }
-}
-
-export async function getStaticPaths() {
-    const posts = await getAllLists()
-    const paths = posts.map(post => {
-        return {
-            params: {
-                uid: post.uid,
-            },
-        }
-    })
-
-    return {
-        paths,
-        fallback: false,
     }
 }

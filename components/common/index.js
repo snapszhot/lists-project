@@ -1,6 +1,7 @@
 export { default as CircleLoader } from './CircleLoader'
 export { default as Container } from './Container'
 export { default as ErrorMessage } from './ErrorMessage'
+export { default as FilmList } from './FilmList'
 export { default as Handle } from './Handle'
 export { default as InputLabel } from './InputLabel'
 export { default as Movie } from './Movie'

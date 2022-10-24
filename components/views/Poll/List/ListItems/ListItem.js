@@ -95,9 +95,9 @@ ListItem.propTypes = {
     listeners: PropTypes.object,
     number: PropTypes.number,
     onRemove: PropTypes.func,
-    transition: PropTypes.object,
+    transition: PropTypes.string,
     transform: PropTypes.object,
-    wrapperStyle: PropTypes.func,
+    wrapperStyle: PropTypes.object,
 }
 
 export default ListItem

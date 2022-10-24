@@ -40,7 +40,6 @@ export default function Poll({
                 `You must vote for at least ${MIN_FILMS} and no more than ${MAX_FILMS} films.`
             )
         } else {
-            console.log(list) // eslint-disable-line no-console
             setNumError(null)
             await axios.post('/api/vote', {
                 poll_id: uid,

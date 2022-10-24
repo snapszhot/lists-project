@@ -45,7 +45,7 @@ export default function SortableListItem({
 }
 
 SortableListItem.propTypes = {
-    id: PropTypes.string,
+    id: PropTypes.number,
     index: PropTypes.number,
     item: PropTypes.object,
     number: PropTypes.number,

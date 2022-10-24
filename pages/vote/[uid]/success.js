@@ -2,30 +2,34 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import getSubmittedPoll from '@lib/get-submitted-poll'
 
-import { Container } from '@components/common'
+import { Container, FilmList } from '@components/common'
 
 export default function SuccessPage({ uid, votes }) {
-    const link = `https://lists-project.vercel.app/update?uid=${uid}`
-    console.log(votes) // eslint-disable-line no-console
+    const link = `/update?uid=${uid}`
 
     return (
-        <Container title='Success!'>
-            Thank you for voting. If you need to update or change your ballot,
-            please use this link:{' '}
+        <Container title='Vote Received!'>
+            <p>
+                Thank you for voting. Please review your ballot, listed below.
+                Voting closes TK.
+            </p>
+            <p>Need to update or change your ballot? No problem.</p>
             <Link href={link}>
-                <a>{link}</a>
+                <a>Update my ballot</a>
             </Link>
+            <h2>Your ballot</h2>
+            <FilmList films={votes} />
         </Container>
     )
 }
 
 SuccessPage.propTypes = {
     uid: PropTypes.string,
-    votes: PropTypes.object,
+    votes: PropTypes.array,
 }
 
-export async function getServerSideProps({ req }) {
-    const uid = req?.cookies['list-1965'] || null
+export async function getServerSideProps({ params, req }) {
+    const uid = req?.cookies[`list-${params.uid}`] || null
 
     if (!uid) {
         return {

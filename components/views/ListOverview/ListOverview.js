@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types'
+import { useRouter } from 'next/router'
 import { PrismicRichText } from '@prismicio/react'
 import { DateTime } from 'luxon'
 
-import { Container } from '@components/common'
+import { Container, ErrorMessage } from '@components/common'
 import NavItem from './NavItem'
 
 export default function ListOverview({
+    ballotUid,
     description,
     slug,
     show_results,
@@ -13,14 +15,29 @@ export default function ListOverview({
     voting_begins,
     voting_enabled,
 }) {
+    const { query } = useRouter()
+    const hasNoBallot = query?.noBallot === 'true'
+
     const dt = DateTime.fromISO(voting_begins)
     const votingBegins = dt.toLocaleString({ month: 'long', day: 'numeric' })
-    const votingTitle = voting_enabled
-        ? 'Vote'
-        : `Vote (begins ${votingBegins})`
+    let votingLink = `/vote/${slug}`
+    let votingTitle = `Vote (begins ${votingBegins})`
+
+    if (voting_enabled) {
+        votingTitle = 'Vote'
+    }
+    if (ballotUid) {
+        votingLink = `/edit/${slug}/${ballotUid}`
+        votingTitle = 'Update my ballot'
+    }
 
     return (
         <Container title={title}>
+            {hasNoBallot && (
+                <div style={{ marginBottom: 'var(--spacing-single)' }}>
+                    <ErrorMessage message='We could not find that ballot to update. Please contact swo17 or skilar on criterionforum.org.' />
+                </div>
+            )}
             <PrismicRichText field={description} />
             <ul>
                 <NavItem
@@ -28,7 +45,7 @@ export default function ListOverview({
                     title='View the eligible films'
                 />
                 <NavItem
-                    link={`/vote/${slug}`}
+                    link={votingLink}
                     title={votingTitle}
                     disabled={!voting_enabled}
                 />
@@ -43,6 +60,7 @@ export default function ListOverview({
 }
 
 ListOverview.propTypes = {
+    ballotUid: PropTypes.string,
     description: PropTypes.array,
     slug: PropTypes.string,
     show_results: PropTypes.bool,
