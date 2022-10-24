@@ -6,11 +6,22 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import cn from 'classnames'
 
-import { CircleLoader, ErrorMessage, InputLabel } from '@components/common'
+import {
+    CircleLoader,
+    Container,
+    ErrorMessage,
+    InputLabel,
+} from '@components/common'
 import List from './List'
 import styles from './Poll.module.scss'
 
-export default function Poll({ end_year, start_year, title }) {
+export default function Poll({
+    end_year,
+    start_year,
+    title,
+    uid,
+    voting_ends,
+}) {
     const router = useRouter()
     const [list, setList] = useState([])
     const [numError, setNumError] = useState(null)
@@ -32,7 +43,7 @@ export default function Poll({ end_year, start_year, title }) {
             console.log(list) // eslint-disable-line no-console
             setNumError(null)
             await axios.post('/api/vote', {
-                poll_id: '1965',
+                poll_id: uid,
                 username: values.username,
                 votes: list,
             })
@@ -42,45 +53,43 @@ export default function Poll({ end_year, start_year, title }) {
     }
 
     return (
-        <div className={styles.container}>
-            <main>
-                <h1 className={styles.title}>{title}</h1>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div>
-                        <InputLabel htmlFor='username' title='Username' />
-                        <input
-                            className={cn(styles.input, {
-                                [styles.error]:
-                                    errors.username?.type === 'required',
-                            })}
-                            id='username'
-                            placeholder='Enter your criterionforum.org username'
-                            {...register('username', { required: true })}
-                        />
-                        {errors.username?.type === 'required' && (
-                            <ErrorMessage message='Username is required' />
-                        )}
-                    </div>
-                    <List
-                        endYear={end_year || start_year}
-                        list={list}
-                        setList={setList}
-                        setNumError={setNumError}
-                        startYear={start_year}
+        <Container title={title}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div>
+                    <InputLabel htmlFor='username' title='Username' />
+                    <input
+                        className={cn(styles.input, {
+                            [styles.error]:
+                                errors.username?.type === 'required',
+                        })}
+                        id='username'
+                        placeholder='Enter your criterionforum.org username'
+                        {...register('username', { required: true })}
                     />
-                    <div className={styles.actions}>
-                        <button
-                            className={styles.submit}
-                            disabled={isSubmitting}
-                            type='submit'
-                        >
-                            {isSubmitting ? <CircleLoader /> : 'Submit'}
-                        </button>
-                    </div>
-                    {numError && <ErrorMessage message={numError} />}
-                </form>
-            </main>
-        </div>
+                    {errors.username?.type === 'required' && (
+                        <ErrorMessage message='Username is required' />
+                    )}
+                </div>
+                <List
+                    endYear={end_year || start_year}
+                    list={list}
+                    setList={setList}
+                    setNumError={setNumError}
+                    startYear={start_year}
+                    votingEnds={voting_ends}
+                />
+                <div className={styles.actions}>
+                    <button
+                        className={styles.submit}
+                        disabled={isSubmitting}
+                        type='submit'
+                    >
+                        {isSubmitting ? <CircleLoader /> : 'Submit'}
+                    </button>
+                </div>
+                {numError && <ErrorMessage message={numError} />}
+            </form>
+        </Container>
     )
 }
 
@@ -88,4 +97,6 @@ Poll.propTypes = {
     end_year: PropTypes.number,
     start_year: PropTypes.number,
     title: PropTypes.string,
+    voting_ends: PropTypes.string,
+    uid: PropTypes.string,
 }

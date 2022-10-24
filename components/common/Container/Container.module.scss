@@ -1,0 +1,9 @@
+.container {
+    margin: 0 auto;
+    max-width: 550px;
+    padding: var(--spacing-single) var(--spacing-single) var(--spacing-triple);
+}
+
+.title {
+    font-size: var(--font-size-large);
+}

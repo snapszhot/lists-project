@@ -1,9 +1,7 @@
 import { getAllLists, getSingleList } from '@lib/prismic'
 
-import { ListOverview } from '@components/views'
-
-export default function ListOverviewPage(props) {
-    return <ListOverview {...props} />
+export default function ResultsPage() {
+    return 'There’s nothing here...'
 }
 
 export async function getStaticProps({ params, preview = false }) {
@@ -13,7 +11,6 @@ export async function getStaticProps({ params, preview = false }) {
         props: {
             ...list,
             preview,
-            slug: params.uid,
         },
         revalidate: 60,
     }

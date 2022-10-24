@@ -1,9 +1,9 @@
 import { getAllLists, getSingleList } from '@lib/prismic'
 
-import { ListOverview } from '@components/views'
+import { Poll } from '@components/views'
 
-export default function ListOverviewPage(props) {
-    return <ListOverview {...props} />
+export default function VotePage(props) {
+    return <Poll {...props} />
 }
 
 export async function getStaticProps({ params, preview = false }) {
@@ -13,7 +13,7 @@ export async function getStaticProps({ params, preview = false }) {
         props: {
             ...list,
             preview,
-            slug: params.uid,
+            uid: params.uid,
         },
         revalidate: 60,
     }

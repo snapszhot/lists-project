@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
+import { DateTime } from 'luxon'
 
 import axios from 'axios'
 import debouce from 'lodash.debounce'
@@ -15,6 +16,7 @@ export default function List({
     setList,
     setNumError,
     startYear,
+    votingEnds,
 }) {
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -25,6 +27,9 @@ export default function List({
     const MAX_FILMS = process.env.NEXT_PUBLIC_MAX_FILMS
     const MIN_FILMS = process.env.NEXT_PUBLIC_MIN_FILMS
     const hitLimit = list.length >= MAX_FILMS
+
+    const dt = DateTime.fromISO(votingEnds)
+    const endDate = dt.toLocaleString({ month: 'long', day: 'numeric' })
 
     const searchAPI = async query => {
         try {
@@ -93,7 +98,9 @@ export default function List({
             <InputLabel htmlFor='search' title='Create a list' />
             <p className={styles.caption}>
                 Select at least ten and no more than twenty-five films. You can
-                drag and drop them in the order of your choosing.
+                drag and drop them in the order of your choosing. You will be
+                able to update your ballot after submission, up until voting
+                closes on {endDate}.
             </p>
             <div className={styles.prefillContainer}>
                 <div>
@@ -134,4 +141,5 @@ List.propTypes = {
     setList: PropTypes.func,
     setNumError: PropTypes.func,
     startYear: PropTypes.number,
+    votingEnds: PropTypes.string,
 }

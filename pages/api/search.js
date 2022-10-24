@@ -6,11 +6,11 @@ export default async function handler(req, res) {
         query.trim() !== '' ? `${query.trim().replace(/ /g, '+')}:*` : ''
 
     const { data, error } = await supabase
-        .rpc('search_unaccented_prefills', {
+        .rpc('search_unaccented_prefills_ints', {
             query: cleanQuery,
         })
-        .gte('year', startYear)
-        .lte('year', endYear)
+        .gte('newyear', startYear)
+        .lte('newyear', endYear)
 
     if (error) {
         throw error

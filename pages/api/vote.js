@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     try {
         const { poll_id, username, votes } = req.body
         const { data, error } = await supabase
-            .from('votes')
+            .from('lp_votes')
             .insert([
                 {
                     poll_id,
