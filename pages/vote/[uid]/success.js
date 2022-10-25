@@ -18,7 +18,7 @@ export default function SuccessPage({ uid, votes }) {
                 <a>Update my ballot</a>
             </Link>
             <h2>Your ballot</h2>
-            <FilmList films={votes} />
+            <FilmList films={votes} listType='ol' />
         </Container>
     )
 }

@@ -35,7 +35,7 @@ export default function ListOverview({
         <Container title={title}>
             {hasNoBallot && (
                 <div style={{ marginBottom: 'var(--spacing-single)' }}>
-                    <ErrorMessage message='We could not find that ballot to update. Please contact swo17 or skilar on criterionforum.org.' />
+                    <ErrorMessage message='We could not find that ballot. Please contact swo17 or skilar on criterionforum.org.' />
                 </div>
             )}
             <PrismicRichText field={description} />
