@@ -1,10 +1,10 @@
+import getSubmittedBallot from '@lib/get-submitted-ballot'
 import { getSingleList } from '@lib/prismic'
 
-// import { Poll } from '@components/views'
+import { Poll } from '@components/views'
 
-export default function EditPage() {
-    return 'Edit my ballot!!'
-    // return <Poll {...props} />
+export default function EditPage(props) {
+    return <Poll {...props} />
 }
 
 export async function getServerSideProps({ params, preview = false, req }) {
@@ -20,10 +20,12 @@ export async function getServerSideProps({ params, preview = false, req }) {
     }
 
     const list = await getSingleList(preview, params.pollId)
+    const ballot = await getSubmittedBallot(params.ballotId)
 
     return {
         props: {
             ...list,
+            ballot,
             preview,
             uid: params.pollId,
         },

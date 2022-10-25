@@ -16,6 +16,7 @@ import List from './List'
 import styles from './Poll.module.scss'
 
 export default function Poll({
+    ballot,
     end_year,
     start_year,
     title,
@@ -23,7 +24,7 @@ export default function Poll({
     voting_ends,
 }) {
     const router = useRouter()
-    const [list, setList] = useState([])
+    const [list, setList] = useState(ballot?.votes || [])
     const [numError, setNumError] = useState(null)
     const {
         formState: { errors, isSubmitting },
@@ -34,6 +35,8 @@ export default function Poll({
     const MAX_FILMS = process.env.NEXT_PUBLIC_MAX_FILMS
     const MIN_FILMS = process.env.NEXT_PUBLIC_MIN_FILMS
 
+    // console.log(ballot)
+
     const onSubmit = async values => {
         if (list.length < MIN_FILMS || list.length > MAX_FILMS) {
             setNumError(
@@ -42,12 +45,13 @@ export default function Poll({
         } else {
             setNumError(null)
             await axios.post('/api/vote', {
+                ballot_id: ballot?.id,
+                ballot_items: list,
                 poll_id: uid,
                 username: values.username,
-                votes: list,
             })
             reset()
-            router.push('/success')
+            router.push(`/vote/${uid}/success`)
         }
     }
 
@@ -61,6 +65,7 @@ export default function Poll({
                             [styles.error]:
                                 errors.username?.type === 'required',
                         })}
+                        defaultValue={ballot?.username}
                         id='username'
                         placeholder='Enter your criterionforum.org username'
                         {...register('username', { required: true })}
@@ -93,6 +98,7 @@ export default function Poll({
 }
 
 Poll.propTypes = {
+    ballot: PropTypes.object,
     end_year: PropTypes.number,
     start_year: PropTypes.number,
     title: PropTypes.string,

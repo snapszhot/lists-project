@@ -1,44 +1,86 @@
 import { serialize } from 'cookie'
 import supabase from '@lib/supabase-client'
 
+async function createBallot(ballot) {
+    const { data, error } = await supabase
+        .from('lp_ballots')
+        .insert(ballot)
+        .select()
+
+    if (error) {
+        throw error
+    }
+
+    return data[0].id
+}
+
+async function updateBallot(ballotUid) {
+    const { error } = await supabase
+        .from('lp_ballots')
+        .update({ updated_at: new Date() })
+        .eq('id', ballotUid)
+
+    if (error) {
+        throw error
+    }
+
+    return ballotUid
+}
+
+function getBallotItems(items, id) {
+    return items.map((item, index) => {
+        return {
+            film_id: item.id,
+            rank: index + 1,
+            ballot_id: id,
+        }
+    })
+}
+
+async function createBallotItems(ballot_items, ballotUid) {
+    const ballotItems = getBallotItems(ballot_items, ballotUid)
+
+    const { error } = await supabase.from('lp_ballot_item').insert(ballotItems)
+
+    if (error) {
+        throw error
+    }
+}
+
+async function updateBallotItems(ballot_items, ballotUid) {
+    const payload = getBallotItems(ballot_items, ballotUid)
+    // console.log(payload)
+
+    const { error } = await supabase.rpc('update_many_rows', {
+        payload,
+    })
+
+    if (error) {
+        throw error
+    }
+}
+
 export default async function handler(req, res) {
     try {
-        const { poll_id, username, votes } = req.body
-        const { data, error: ballotError } = await supabase
-            .from('lp_votes')
-            .insert([
-                {
-                    poll_id,
-                    username,
-                },
-            ])
-            .select()
+        const { ballot_id, ballot_items, poll_id, username } = req.body
+        const ballotUid = ballot_id
+            ? await updateBallot(ballot_id)
+            : await createBallot([
+                  {
+                      poll_id,
+                      username,
+                  },
+              ])
 
-        if (ballotError) {
-            throw ballotError
-        }
-
-        const listId = `list-${poll_id}`
-        const uid = data[0].id
-        const votesToInsert = votes.map((vote, index) => {
-            return {
-                film_id: vote.id,
-                rank: index + 1,
-                vote_id: uid,
-            }
-        })
-
-        const { error: itemError } = await supabase
-            .from('lp_vote_item')
-            .insert(votesToInsert)
-
-        if (itemError) {
-            throw itemError
+        if (ballot_id) {
+            await updateBallotItems(ballot_items, ballotUid)
+        } else {
+            await createBallotItems(ballot_items, ballotUid)
         }
 
         res.setHeader(
             'set-cookie',
-            serialize(listId, String(uid), {
+            serialize(`list-${poll_id}`, String(ballotUid), {
                 httpOnly: true,
                 sameSite: true,
                 path: '/',
