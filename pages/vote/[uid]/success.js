@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import Link from 'next/link'
-import getSubmittedPoll from '@lib/get-submitted-poll'
+import getSubmittedBallot from '@lib/get-submitted-ballot'
 
 import { Container, FilmList } from '@components/common'
 
-export default function SuccessPage({ uid, votes }) {
-    const link = `/update?uid=${uid}`
+export default function SuccessPage({ ballotId, pollId, votes }) {
+    const link = `/edit/${pollId}/${ballotId}`
 
     return (
         <Container title='Vote Received!'>
@@ -24,27 +24,29 @@ export default function SuccessPage({ uid, votes }) {
 }
 
 SuccessPage.propTypes = {
-    uid: PropTypes.string,
+    ballotId: PropTypes.string,
+    pollId: PropTypes.string,
     votes: PropTypes.array,
 }
 
 export async function getServerSideProps({ params, req }) {
-    const uid = req?.cookies[`list-${params.uid}`] || null
+    const ballotId = req?.cookies[`list-${params.uid}`] || null
 
-    if (!uid) {
+    if (!ballotId) {
         return {
             redirect: {
-                destination: '/',
+                destination: `/list/${params.uid}`,
                 permanent: false,
             },
         }
     }
 
-    const votes = await getSubmittedPoll(uid)
+    const { votes } = await getSubmittedBallot(ballotId)
 
     return {
         props: {
-            uid,
+            ballotId,
+            pollId: params.uid,
             votes,
         },
     }
