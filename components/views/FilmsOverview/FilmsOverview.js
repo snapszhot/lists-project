@@ -17,7 +17,7 @@ export default function FilmsOverview({ films, title }) {
             </p>
             <h2 className={styles.subtitle}>Eligible films</h2>
             <p className={styles.subtitleCaption}>
-                Sorted by director’s name, as written
+                Sorted alphabetically by director’s name as written
             </p>
             <FilmList films={films} />
         </Container>
