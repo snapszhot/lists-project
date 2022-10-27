@@ -1,5 +1,7 @@
+export { default as DashboardOverview } from './DashboardOverview'
 export { default as FilmsOverview } from './FilmsOverview'
 export { default as FourOhFour } from './FourOhFour'
+export { default as ListDashboard } from './ListDashboard'
 export { default as ListofLists } from './ListofLists'
 export { default as ListOverview } from './ListOverview'
 export { default as Poll } from './Poll'
