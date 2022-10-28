@@ -15,6 +15,8 @@ function getCsvRows(ballots) {
             const existingVotes = rows[title]?.votes || 0
             const votes = existingVotes + 1
 
+            const score = votes <= 1 ? 0 : points
+
             const existingTopFivePlacements =
                 rows[title]?.top_five_placements || 0
             const isInTopFive = rank <= 5 ? 1 : 0
@@ -36,6 +38,7 @@ function getCsvRows(ballots) {
                 highest_ranking,
                 highest_ranking_multiples,
                 points,
+                score,
                 title,
                 top_five_placements,
                 votes,
@@ -45,11 +48,11 @@ function getCsvRows(ballots) {
 
     const rowsArray = Object.values(rows)
     rowsArray.sort((a, b) => {
-        if (a.highest_ranking > b.highest_ranking) {
+        if (a.points < b.points) {
             return 1
         }
 
-        if (a.highest_ranking < b.highest_ranking) {
+        if (a.points > b.points) {
             return -1
         }
 
@@ -64,6 +67,7 @@ async function compileCsv(ballots) {
         'title',
         'director',
         'points',
+        'score',
         'votes',
         'top_five_placements',
         'highest_ranking',
