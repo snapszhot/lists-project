@@ -1,3 +1,4 @@
+export { default as BarLoader } from './BarLoader'
 export { default as CircleLoader } from './CircleLoader'
 export { default as Container } from './Container'
 export { default as ErrorMessage } from './ErrorMessage'
