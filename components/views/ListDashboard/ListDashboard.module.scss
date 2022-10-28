@@ -2,4 +2,5 @@
 
 .download {
     @extend %buttonPrimary;
+    margin-bottom: var(--spacing-single);
 }

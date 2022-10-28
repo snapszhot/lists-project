@@ -46,6 +46,12 @@ export default function ListDashboard({
             >
                 Download raw data
             </button>
+            <button
+                className={styles.download}
+                onClick={() => downloadCsv('results')}
+            >
+                Download results
+            </button>
         </Container>
     )
 }
