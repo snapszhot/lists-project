@@ -3,7 +3,7 @@ import { Container, ListList } from '@components/common'
 
 export default function DashboardOverview({ lists }) {
     return (
-        <Container title='Dashboard'>
+        <Container title='Dashboard – All Lists'>
             <ListList linkSlug='dashboard' lists={lists} />
         </Container>
     )

@@ -34,6 +34,7 @@ export default function Poll({
     } = useForm()
     const MAX_FILMS = process.env.NEXT_PUBLIC_MAX_FILMS
     const MIN_FILMS = process.env.NEXT_PUBLIC_MIN_FILMS
+    const pageTitle = ballot ? `${title} – Update Ballot` : `${title} – Vote`
 
     // console.log(ballot)
 
@@ -56,7 +57,7 @@ export default function Poll({
     }
 
     return (
-        <Container title={title}>
+        <Container title={pageTitle}>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <InputLabel htmlFor='username' title='Username' />

@@ -4,7 +4,7 @@ import styles from './FilmsOverview.module.scss'
 
 export default function FilmsOverview({ films, title, ...props }) {
     return (
-        <Container title={title}>
+        <Container title={`${title} – Eligible Films`}>
             <p>
                 Below is a list of films you can vote for from this year. If you
                 want to be able to vote for something that isn’t listed here,
