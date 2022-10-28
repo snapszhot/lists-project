@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import cn from 'classnames'
 
-import FilmListItem from './FilmListItem'
+import { Movie } from '@components/common'
 import styles from './FilmList.module.scss'
 
-export default function FilmList({ films, listType }) {
+export default function FilmList({ films, listType, ...props }) {
     const ElementType = listType
     const className = cn({
         [styles.list]: listType === 'ol',
@@ -13,7 +13,9 @@ export default function FilmList({ films, listType }) {
     return (
         <ElementType className={className}>
             {films.map(film => (
-                <FilmListItem {...film} key={film.id} />
+                <li className={styles.film} key={film.id}>
+                    <Movie {...film} {...props} />
+                </li>
             ))}
         </ElementType>
     )

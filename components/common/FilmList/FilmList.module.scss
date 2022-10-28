@@ -1,3 +1,12 @@
 .list {
     list-style: decimal;
 }
+
+.film {
+    border-bottom: 1px solid var(--color-light-grey);
+    padding: var(--spacing-half) 0;
+
+    &:first-of-type {
+        border-top: 1px solid var(--color-light-grey);
+    }
+}

@@ -7,6 +7,7 @@ export default function Prefills({
     handlePrefillSelect,
     options,
     showPrefill,
+    ...props
 }) {
     // If we have no value or if the value entered doesn't match any
     // of the prefill options, don't show the prefill box. Also if we've just
@@ -22,6 +23,7 @@ export default function Prefills({
                     <PrefillItem
                         item={option}
                         handleClick={handlePrefillSelect}
+                        {...props}
                         key={index}
                     />
                 )

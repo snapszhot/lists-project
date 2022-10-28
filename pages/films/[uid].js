@@ -17,8 +17,10 @@ export async function getStaticProps({ params, preview = false }) {
     return {
         props: {
             ...list,
+            endYear: list.end_year,
             films,
             preview,
+            startYear: list.start_year,
         },
         revalidate: 60,
     }

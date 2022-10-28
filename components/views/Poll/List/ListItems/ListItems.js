@@ -25,6 +25,7 @@ export default function ListItems({
     list,
     setList,
     wrapperStyle = () => ({}),
+    ...props
 }) {
     const [activeId, setActiveId] = useState(null)
     const getIndex = activeId => list.findIndex(it => it.id === activeId)
@@ -82,6 +83,7 @@ export default function ListItems({
                             style={getItemStyles}
                             wrapperStyle={wrapperStyle}
                             onRemove={handleRemove}
+                            {...props}
                         />
                     ))}
                 </ol>
@@ -106,6 +108,7 @@ export default function ListItems({
                             isDragOverlay: true,
                         })}
                         dragOverlay
+                        {...props}
                     />
                 )}
             </DragOverlay>

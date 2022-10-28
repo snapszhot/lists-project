@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { Container, FilmList } from '@components/common'
 import styles from './FilmsOverview.module.scss'
 
-export default function FilmsOverview({ films, title }) {
+export default function FilmsOverview({ films, title, ...props }) {
     return (
         <Container title={title}>
             <p>
@@ -19,7 +19,7 @@ export default function FilmsOverview({ films, title }) {
             <p className={styles.subtitleCaption}>
                 Sorted alphabetically by director’s name as written
             </p>
-            <FilmList films={films} />
+            <FilmList films={films} {...props} />
         </Container>
     )
 }

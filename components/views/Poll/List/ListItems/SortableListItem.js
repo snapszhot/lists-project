@@ -4,11 +4,13 @@ import { useSortable } from '@dnd-kit/sortable'
 import ListItem from './ListItem'
 
 export default function SortableListItem({
+    endYear,
     id,
     index,
     item,
     number,
     onRemove,
+    startYear,
     wrapperStyle,
 }) {
     const {
@@ -28,6 +30,7 @@ export default function SortableListItem({
             data-id={id}
             data-index={index}
             dragging={isDragging}
+            endYear={endYear}
             handleProps={{
                 ref: setActivatorNodeRef,
             }}
@@ -36,6 +39,7 @@ export default function SortableListItem({
             listeners={listeners}
             number={number}
             onRemove={() => onRemove(id)}
+            startYear={startYear}
             transform={transform}
             transition={transition}
             wrapperStyle={wrapperStyle?.({ index, isDragging, active, id })}
@@ -45,10 +49,12 @@ export default function SortableListItem({
 }
 
 SortableListItem.propTypes = {
+    endYear: PropTypes.number,
     id: PropTypes.number,
     index: PropTypes.number,
     item: PropTypes.object,
     number: PropTypes.number,
     onRemove: PropTypes.func,
+    startYear: PropTypes.number,
     wrapperStyle: PropTypes.func,
 }

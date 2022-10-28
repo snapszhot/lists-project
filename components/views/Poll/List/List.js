@@ -125,12 +125,19 @@ export default function List({
                 </div>
                 {error && <ErrorMessage message={error} />}
                 <Prefills
+                    endYear={endYear}
                     handlePrefillSelect={handlePrefillSelect}
                     options={options}
                     showPrefill={showPrefill}
+                    startYear={startYear}
                 />
             </div>
-            <ListItems list={list} setList={setList} />
+            <ListItems
+                endYear={endYear}
+                list={list}
+                setList={setList}
+                startYear={startYear}
+            />
         </div>
     )
 }

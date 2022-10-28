@@ -4,7 +4,7 @@ import { Container, ListList } from '@components/common'
 export default function DashboardOverview({ lists }) {
     return (
         <Container title='Dashboard'>
-            <ListList linkSlug='/dashboard' lists={lists} />
+            <ListList linkSlug='dashboard' lists={lists} />
         </Container>
     )
 }

@@ -6,15 +6,20 @@ export default function Movie({
     altLangTitle,
     altLangTitlePhonetic,
     director,
+    endYear,
     engTransTitle,
     originalTitle,
     originalTitlePhonetic,
     releaseYear,
+    startYear,
 }) {
     // These vars are in case you need to add "aka" and "or" in the future
     // const hasAlternateTitle = altLangTitle || engTransTitle || altEngTitle
     // const hasFirstOr = altLangTitle && engTransTitle
     // const hasSecondOr = engTransTitle && altEngTitle
+    const hasYearRange =
+        (!endYear || endYear === startYear) &&
+        releaseYear !== startYear.toString()
 
     return (
         <>
@@ -41,7 +46,7 @@ export default function Movie({
                 )}
             </span>
             <span className={styles.director}>
-                {director} {releaseYear && <>({releaseYear})</>}
+                {director} {hasYearRange && <>({releaseYear})</>}
             </span>
         </>
     )
@@ -52,8 +57,10 @@ Movie.propTypes = {
     altLangTitle: PropTypes.string,
     altLangTitlePhonetic: PropTypes.string,
     director: PropTypes.string,
+    endYear: PropTypes.number,
     engTransTitle: PropTypes.string,
     originalTitle: PropTypes.string,
     originalTitlePhonetic: PropTypes.string,
     releaseYear: PropTypes.string,
+    startYear: PropTypes.number,
 }

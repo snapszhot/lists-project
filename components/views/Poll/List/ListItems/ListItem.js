@@ -10,12 +10,14 @@ const ListItem = forwardRef(
         {
             dragOverlay,
             dragging,
+            endYear,
             handleProps,
             index,
             item,
             listeners,
             number,
             onRemove,
+            startYear,
             transition,
             transform,
             wrapperStyle,
@@ -67,7 +69,11 @@ const ListItem = forwardRef(
                 >
                     <div className={styles.listItemNum}>{number}</div>
                     <div>
-                        <Movie {...item} />
+                        <Movie
+                            {...item}
+                            endYear={endYear}
+                            startYear={startYear}
+                        />
                     </div>
                     <div className={styles.actions}>
                         <Remove className={styles.remove} onClick={onRemove} />
@@ -89,12 +95,14 @@ ListItem.displayName = 'ListItem'
 ListItem.propTypes = {
     dragOverlay: PropTypes.bool,
     dragging: PropTypes.bool,
+    endYear: PropTypes.number,
     handleProps: PropTypes.object,
     index: PropTypes.number,
     item: PropTypes.object,
     listeners: PropTypes.object,
     number: PropTypes.number,
     onRemove: PropTypes.func,
+    startYear: PropTypes.number,
     transition: PropTypes.string,
     transform: PropTypes.object,
     wrapperStyle: PropTypes.object,
