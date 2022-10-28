@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { useRouter } from 'next/router'
 import { PrismicRichText } from '@prismicio/react'
-import { DateTime } from 'luxon'
+import getPrettyDate from '@lib/get-pretty-date'
 
 import { Container, ErrorMessage } from '@components/common'
 import NavItem from './NavItem'
@@ -18,8 +18,7 @@ export default function ListOverview({
     const { query } = useRouter()
     const hasNoBallot = query?.noBallot === 'true'
 
-    const dt = DateTime.fromISO(voting_begins)
-    const votingBegins = dt.toLocaleString({ month: 'long', day: 'numeric' })
+    const votingBegins = getPrettyDate(voting_begins)
     let votingLink = `/vote/${slug}`
     let votingTitle = `Vote (begins ${votingBegins})`
 

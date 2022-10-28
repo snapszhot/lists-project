@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
-import { DateTime } from 'luxon'
+import getPrettyDate from '@lib/get-pretty-date'
 
 import axios from 'axios'
 import debouce from 'lodash.debounce'
@@ -28,8 +28,7 @@ export default function List({
     const MIN_FILMS = process.env.NEXT_PUBLIC_MIN_FILMS
     const hitLimit = list.length >= MAX_FILMS
 
-    const dt = DateTime.fromISO(votingEnds)
-    const endDate = dt.toLocaleString({ month: 'long', day: 'numeric' })
+    const endDate = getPrettyDate(votingEnds)
 
     const searchAPI = async query => {
         try {
