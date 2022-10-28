@@ -49,7 +49,7 @@ async function createBallotItems(ballot_items, ballotUid) {
 
 async function updateBallotItems(ballot_items, ballotUid) {
     const payload = getBallotItems(ballot_items, ballotUid)
-    // console.log(payload)
+    console.log(payload)
 
     const { error } = await supabase.rpc('update_many_rows', {
         payload,
