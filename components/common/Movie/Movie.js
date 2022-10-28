@@ -44,10 +44,11 @@ export default function Movie({
                 {altEngTitle && (
                     <span className={styles.origTitle}>[{altEngTitle}]</span>
                 )}
+                {hasYearRange && (
+                    <span className={styles.origTitle}>({releaseYear})</span>
+                )}
             </span>
-            <span className={styles.director}>
-                {director} {hasYearRange && <>({releaseYear})</>}
-            </span>
+            <span className={styles.director}>{director}</span>
         </>
     )
 }
