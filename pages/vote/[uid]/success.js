@@ -14,9 +14,7 @@ export default function SuccessPage({ ballotId, pollId, votes }) {
                 Voting closes TK.
             </p>
             <p>Need to update or change your ballot? No problem.</p>
-            <Link href={link}>
-                <a>Update my ballot</a>
-            </Link>
+            <Link href={link}>Update my ballot</Link>
             <h2>Your ballot</h2>
             <FilmList films={votes} listType='ol' />
         </Container>

@@ -7,7 +7,7 @@ export default function ListList({ linkSlug, lists }) {
             {lists.map(list => (
                 <li key={list.id}>
                     <Link href={`/${linkSlug}/${list.uid}`}>
-                        <a>{list.data.title}</a>
+                        {list.data.title}
                     </Link>
                 </li>
             ))}

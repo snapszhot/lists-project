@@ -14,8 +14,8 @@ export default function NavItem({ disabled, link, title }) {
             {disabled ? (
                 <span className={className}>{title}</span>
             ) : (
-                <Link href={link}>
-                    <a className={className}>{title}</a>
+                <Link href={link} className={className}>
+                    {title}
                 </Link>
             )}
         </li>
