@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 import getSubmittedBallot from '@lib/get-submitted-ballot'
+import { getSingleList } from '@lib/prismic'
 
 import { Container, FilmList } from '@components/common'
 
-export default function SuccessPage({ ballotId, pollId, votes }) {
+export default function SuccessPage({ ballotId, pollId, votes, ...props }) {
     const link = `/edit/${pollId}/${ballotId}`
 
     return (
@@ -16,7 +17,7 @@ export default function SuccessPage({ ballotId, pollId, votes }) {
             <p>Need to update or change your ballot? No problem.</p>
             <Link href={link}>Update my ballot</Link>
             <h2>Your ballot</h2>
-            <FilmList films={votes} listType='ol' />
+            <FilmList films={votes} listType='ol' {...props} />
         </Container>
     )
 }
@@ -27,7 +28,7 @@ SuccessPage.propTypes = {
     votes: PropTypes.array,
 }
 
-export async function getServerSideProps({ params, req }) {
+export async function getServerSideProps({ params, preview = false, req }) {
     const ballotId = req?.cookies[`list-${params.uid}`] || null
 
     if (!ballotId) {
@@ -40,11 +41,14 @@ export async function getServerSideProps({ params, req }) {
     }
 
     const { votes } = await getSubmittedBallot(ballotId)
+    const list = await getSingleList(preview, params.uid)
 
     return {
         props: {
             ballotId,
+            endYear: list.end_year,
             pollId: params.uid,
+            startYear: list.start_year,
             votes,
         },
     }
