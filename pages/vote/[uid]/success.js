@@ -24,8 +24,8 @@ export default function SuccessPage({
             </p>
             <p>
                 Need to update or change your ballot? No problem.{' '}
-                <Link href={link}>Update your ballot here.</Link> All changes
-                must be made before voting ends on {endDate}.
+                <Link href={link}>You can update your ballot here.</Link> All
+                changes must be made before voting ends on {endDate}.
             </p>
             <h2>Your ballot</h2>
             <FilmList films={votes} listType='ol' {...props} />
