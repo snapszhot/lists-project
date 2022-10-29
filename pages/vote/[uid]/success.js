@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import Link from 'next/link'
+import { captureException } from '@sentry/nextjs'
 import getPrettyDate from '@lib/get-pretty-date'
 import getSubmittedBallot from '@lib/get-submitted-ballot'
 import { getSingleList } from '@lib/prismic'
@@ -40,28 +41,33 @@ SuccessPage.propTypes = {
 }
 
 export async function getServerSideProps({ params, preview = false, req }) {
-    const ballotId = req?.cookies[`list-${params.uid}`] || null
+    try {
+        const ballotId = req?.cookies[`list-${params.uid}`] || null
 
-    if (!ballotId) {
+        if (!ballotId) {
+            return {
+                redirect: {
+                    destination: `/list/${params.uid}`,
+                    permanent: false,
+                },
+            }
+        }
+
+        const { votes } = await getSubmittedBallot(ballotId)
+        const list = await getSingleList(preview, params.uid)
+
         return {
-            redirect: {
-                destination: `/list/${params.uid}`,
-                permanent: false,
+            props: {
+                ...list,
+                ballotId,
+                endYear: list.end_year,
+                pollId: params.uid,
+                startYear: list.start_year,
+                votes,
             },
         }
-    }
-
-    const { votes } = await getSubmittedBallot(ballotId)
-    const list = await getSingleList(preview, params.uid)
-
-    return {
-        props: {
-            ...list,
-            ballotId,
-            endYear: list.end_year,
-            pollId: params.uid,
-            startYear: list.start_year,
-            votes,
-        },
+    } catch (error) {
+        captureException(error)
+        throw error
     }
 }

@@ -1,3 +1,4 @@
+import { captureException } from '@sentry/nextjs'
 import formatFilm from '@lib/format-film'
 import supabase from '@lib/supabase-client'
 
@@ -14,6 +15,7 @@ export default async function handler(req, res) {
         .lte('newyear', endYear)
 
     if (error) {
+        captureException(error)
         throw error
     }
 

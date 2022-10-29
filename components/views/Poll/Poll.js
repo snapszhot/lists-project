@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
+import { captureException } from '@sentry/nextjs'
 import { useRouter } from 'next/router'
 
 import { useForm } from 'react-hook-form'
@@ -42,15 +43,19 @@ export default function Poll({
                 `You must vote for at least ${MIN_FILMS} and no more than ${MAX_FILMS} films.`
             )
         } else {
-            setNumError(null)
-            await axios.post('/api/vote', {
-                ballot_id: ballot?.id,
-                ballot_items: list,
-                poll_id: uid,
-                username: values.username,
-            })
-            reset()
-            router.push(`/vote/${uid}/success`)
+            try {
+                setNumError(null)
+                await axios.post('/api/vote', {
+                    ballot_id: ballot?.id,
+                    ballot_items: list,
+                    poll_id: uid,
+                    username: values.username,
+                })
+                reset()
+                router.push(`/vote/${uid}/success`)
+            } catch (error) {
+                captureException(error)
+            }
         }
     }
 

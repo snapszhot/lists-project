@@ -1,3 +1,4 @@
+import { captureException } from '@sentry/nextjs'
 import { serialize } from 'cookie'
 import supabase from '@lib/supabase-client'
 
@@ -99,7 +100,7 @@ export default async function handler(req, res) {
         )
         res.status(200).json({ message: 'Success!' })
     } catch (error) {
-        console.log('Error adding vote to Lists Project', error) // eslint-disable-line no-console
+        captureException(error)
 
         res.status(500).json({ error: 'Error recording vote' })
     }

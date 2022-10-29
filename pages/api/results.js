@@ -1,3 +1,4 @@
+import { captureException } from '@sentry/nextjs'
 import generateCsv from '@lib/generate-csv'
 import getFilmTitle from '@lib/get-film-title'
 import getPollResults from '@lib/get-poll-results'
@@ -87,7 +88,7 @@ export default async function handler(req, res) {
         res.setHeader('Content-Type', 'text/csv')
         res.status(200).send(csv)
     } catch (error) {
-        console.log('Error generating raw data', error) // eslint-disable-line no-console
+        captureException(error)
 
         res.status(500).json({ error: 'Error generating raw data csv' })
     }

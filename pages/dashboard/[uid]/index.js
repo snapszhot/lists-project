@@ -1,3 +1,4 @@
+import { captureException } from '@sentry/nextjs'
 import { getAllLists, getSingleList } from '@lib/prismic'
 import { ListDashboard } from '@components/views'
 
@@ -6,15 +7,20 @@ export default function ListDashboardPage(props) {
 }
 
 export async function getStaticProps({ params, preview = false }) {
-    const list = await getSingleList(preview, params.uid)
+    try {
+        const list = await getSingleList(preview, params.uid)
 
-    return {
-        props: {
-            ...list,
-            preview,
-            uid: params.uid,
-        },
-        revalidate: 60,
+        return {
+            props: {
+                ...list,
+                preview,
+                uid: params.uid,
+            },
+            revalidate: 60,
+        }
+    } catch (error) {
+        captureException(error)
+        throw error
     }
 }
 

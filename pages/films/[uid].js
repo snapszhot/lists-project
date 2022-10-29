@@ -1,3 +1,4 @@
+import { captureException } from '@sentry/nextjs'
 import { getAllLists, getSingleList } from '@lib/prismic'
 import getFilmsByYear from '@lib/get-films-by-year'
 
@@ -8,21 +9,26 @@ export default function FilmsOverviewPage(props) {
 }
 
 export async function getStaticProps({ params, preview = false }) {
-    const list = await getSingleList(preview, params.uid)
-    const films = await getFilmsByYear(
-        list.start_year,
-        list.end_year || list.start_year
-    )
+    try {
+        const list = await getSingleList(preview, params.uid)
+        const films = await getFilmsByYear(
+            list.start_year,
+            list.end_year || list.start_year
+        )
 
-    return {
-        props: {
-            ...list,
-            endYear: list.end_year,
-            films,
-            preview,
-            startYear: list.start_year,
-        },
-        revalidate: 60,
+        return {
+            props: {
+                ...list,
+                endYear: list.end_year,
+                films,
+                preview,
+                startYear: list.start_year,
+            },
+            revalidate: 60,
+        }
+    } catch (error) {
+        captureException(error)
+        throw error
     }
 }
 

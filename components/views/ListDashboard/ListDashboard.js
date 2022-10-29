@@ -1,9 +1,12 @@
+import { useState } from 'react'
 import PropTypes from 'prop-types'
+import { captureException } from '@sentry/nextjs'
 import axios from 'axios'
 import fileDownload from 'js-file-download'
+import getPrettyDate from '@lib/get-pretty-date'
 import toSlug from '@lib/to-slug'
 
-import { Container } from '@components/common'
+import { Container, ErrorMessage } from '@components/common'
 import styles from './ListDashboard.module.scss'
 
 export default function ListDashboard({
@@ -13,32 +16,42 @@ export default function ListDashboard({
     voting_enabled,
     voting_ends,
 }) {
+    const [error, setError] = useState(null)
     const containerTitle = `${title} Dashboard`
+    const beginDate = getPrettyDate(voting_begins)
+    const endDate = getPrettyDate(voting_ends)
+    const votingEnabled = voting_enabled ? 'enabled' : 'disabled'
 
     const downloadCsv = async endpoint => {
-        const { data } = await axios.post(
-            `/api/${endpoint}`,
-            {
-                poll_id: uid,
-            },
-            {
-                responseType: 'blob',
-            }
-        )
+        try {
+            const { data } = await axios.post(
+                `/api/${endpoint}`,
+                {
+                    poll_id: uid,
+                },
+                {
+                    responseType: 'blob',
+                }
+            )
 
-        const titleSlug = toSlug(title)
-        const filename = `${titleSlug}-${endpoint}.csv`
+            const titleSlug = toSlug(title)
+            const filename = `${titleSlug}-${endpoint}.csv`
 
-        fileDownload(data, filename)
+            fileDownload(data, filename)
+            setError(null)
+        } catch (error) {
+            captureException(error)
+            setError(
+                'There was an error downloading the file. Please try again later.'
+            )
+        }
     }
 
     return (
         <Container title={containerTitle}>
             <p>
-                This poll runs from {voting_begins} to {voting_ends}.
-                {voting_enabled && (
-                    <> Voting is currently enabled for this poll.</>
-                )}
+                This poll runs from {beginDate} to {endDate}. Voting is
+                currently {votingEnabled} for this poll.
             </p>
             <button
                 className={styles.download}
@@ -52,6 +65,7 @@ export default function ListDashboard({
             >
                 Download results
             </button>
+            {error && <ErrorMessage message={error} />}
         </Container>
     )
 }

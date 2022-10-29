@@ -1,3 +1,4 @@
+import { captureException } from '@sentry/nextjs'
 import { getAllLists } from '@lib/prismic'
 import { ListofLists } from '@components/views'
 
@@ -6,13 +7,18 @@ export default function HomePage(props) {
 }
 
 export async function getStaticProps({ preview = false }) {
-    const lists = await getAllLists()
+    try {
+        const lists = await getAllLists()
 
-    return {
-        props: {
-            lists,
-            preview,
-        },
-        revalidate: 60,
+        return {
+            props: {
+                lists,
+                preview,
+            },
+            revalidate: 60,
+        }
+    } catch (error) {
+        captureException(error)
+        throw error
     }
 }

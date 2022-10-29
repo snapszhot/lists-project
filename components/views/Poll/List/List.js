@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
+import { captureException } from '@sentry/nextjs'
 import getPrettyDate from '@lib/get-pretty-date'
 
 import axios from 'axios'
@@ -42,6 +43,7 @@ export default function List({
             setError(null)
             setLoading(false)
         } catch (error) {
+            captureException(error)
             setError(
                 'We’re having some trouble searching. Please try again later.'
             )

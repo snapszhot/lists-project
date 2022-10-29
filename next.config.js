@@ -1,9 +1,18 @@
 const path = require('path')
+const { withSentryConfig } = require('@sentry/nextjs')
 
-module.exports = {
+const moduleExports = {
     reactStrictMode: true,
     sassOptions: {
         includePaths: [path.join(__dirname, 'styles')],
     },
-    swcMinify: true,
+    sentry: {
+        hideSourceMaps: true,
+    },
 }
+
+const sentryWebpackPluginOptions = {
+    silent: true,
+}
+
+module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions)
