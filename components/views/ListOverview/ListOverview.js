@@ -9,8 +9,8 @@ import NavItem from './NavItem'
 export default function ListOverview({
     ballotUid,
     description,
+    poll_closed,
     slug,
-    show_results,
     title,
     voting_begins,
     voting_enabled,
@@ -28,6 +28,17 @@ export default function ListOverview({
     if (ballotUid) {
         votingLink = `/edit/${slug}/${ballotUid}`
         votingTitle = 'Update my ballot'
+    }
+
+    if (poll_closed) {
+        return (
+            <Container title={title}>
+                <p>
+                    Voting has closed for this poll. Thank you to everyone who
+                    participated.
+                </p>
+            </Container>
+        )
     }
 
     return (
@@ -48,11 +59,6 @@ export default function ListOverview({
                     title={votingTitle}
                     disabled={!voting_enabled}
                 />
-                <NavItem
-                    link={`/results/${slug}`}
-                    title='View the results'
-                    disabled={!show_results}
-                />
             </ul>
         </Container>
     )
@@ -61,8 +67,8 @@ export default function ListOverview({
 ListOverview.propTypes = {
     ballotUid: PropTypes.string,
     description: PropTypes.array,
+    poll_closed: PropTypes.bool,
     slug: PropTypes.string,
-    show_results: PropTypes.bool,
     title: PropTypes.string,
     voting_begins: PropTypes.string,
     voting_enabled: PropTypes.bool,

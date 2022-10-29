@@ -24,6 +24,15 @@ export async function getServerSideProps({ params, preview = false, req }) {
         const list = await getSingleList(preview, params.pollId)
         const ballot = await getSubmittedBallot(params.ballotId)
 
+        if (list.poll_closed) {
+            return {
+                redirect: {
+                    destination: `/list/${params.pollId}`,
+                    permanent: false,
+                },
+            }
+        }
+
         return {
             props: {
                 ...list,
