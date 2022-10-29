@@ -68,6 +68,9 @@ export async function getServerSideProps({ params, preview = false, req }) {
         }
     } catch (error) {
         captureException(error)
-        throw error
+
+        return {
+            notFound: true,
+        }
     }
 }

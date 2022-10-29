@@ -28,7 +28,10 @@ export async function getStaticProps({ params, preview = false }) {
         }
     } catch (error) {
         captureException(error)
-        throw error
+
+        return {
+            notFound: true,
+        }
     }
 }
 
