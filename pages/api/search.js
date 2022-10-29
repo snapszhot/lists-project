@@ -7,7 +7,7 @@ export default async function handler(req, res) {
         query.trim() !== '' ? `${query.trim().replace(/ /g, '+')}:*` : ''
 
     const { data, error } = await supabase
-        .rpc('search_unaccented_prefills_ints', {
+        .rpc('lp_search', {
             query: cleanQuery,
         })
         .gte('newyear', startYear)
