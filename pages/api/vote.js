@@ -47,11 +47,22 @@ async function createBallotItems(ballot_items, ballotUid) {
     }
 }
 
-async function updateBallotItems(ballot_items, ballotUid) {
-    const payload = getBallotItems(ballot_items, ballotUid)
-    // console.log(payload)
+async function deleteBallotItems(ballotUid) {
+    const { error } = await supabase.rpc('delete_ballot_rows', {
+        id: ballotUid,
+    })
 
-    const { error } = await supabase.rpc('update_many_rows', {
+    if (error) {
+        throw error
+    }
+}
+
+async function updateBallotItems(ballot_items, ballotUid) {
+    await deleteBallotItems(ballotUid)
+
+    const payload = getBallotItems(ballot_items, ballotUid)
+
+    const { error } = await supabase.rpc('update_ballot_rows', {
         payload,
     })
 

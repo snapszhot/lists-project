@@ -38,7 +38,10 @@ export default function SortableListItem({
             item={item}
             listeners={listeners}
             number={number}
-            onRemove={() => onRemove(id)}
+            onRemove={e => {
+                e.preventDefault()
+                onRemove(id)
+            }}
             startYear={startYear}
             transform={transform}
             transition={transition}

@@ -12,6 +12,7 @@ const Action = forwardRef(({ className, cursor, ...props }, ref) => {
             className={cn(styles.action, className)}
             tabIndex={0}
             style={{ cursor }}
+            type='button'
         />
     )
 })

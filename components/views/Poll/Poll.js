@@ -36,8 +36,6 @@ export default function Poll({
     const MIN_FILMS = process.env.NEXT_PUBLIC_MIN_FILMS
     const pageTitle = ballot ? `${title} – Update Ballot` : `${title} – Vote`
 
-    // console.log(ballot)
-
     const onSubmit = async values => {
         if (list.length < MIN_FILMS || list.length > MAX_FILMS) {
             setNumError(
