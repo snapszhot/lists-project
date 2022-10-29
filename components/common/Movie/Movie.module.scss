@@ -1,10 +1,11 @@
 .titleWrapper {
-    align-items: baseline;
+    // align-items: baseline;
     color: var(--color-not-black);
-    display: inline-flex;
-    flex-wrap: wrap;
+    display: inline-block;
+    // flex-wrap: wrap;
     font-size: var(--font-size-medium-small);
     font-weight: var(--font-weight-sans-bold);
+    width: 100%;
 }
 
 .title {
@@ -28,5 +29,6 @@
 }
 
 .origTitle {
+    display: inline-block;
     margin-right: var(--spacing-third);
 }
