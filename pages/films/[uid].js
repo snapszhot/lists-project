@@ -24,7 +24,7 @@ export async function getStaticProps({ params, preview = false }) {
                 preview,
                 startYear: list.start_year,
             },
-            revalidate: 60,
+            revalidate: 1,
         }
     } catch (error) {
         captureException(error)
