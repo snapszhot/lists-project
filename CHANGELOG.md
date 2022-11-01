@@ -1,6 +1,10 @@
 # Changelog
 
-## [v1.0.3](https://github.com/snapszhot/lists-project/compare/v1.0.2...v1.0.3)
+## [v1.0.4](https://github.com/snapszhot/lists-project/compare/v1.0.3...v1.0.4)
+
+-   Strip articles in film list [`dae94ce`](https://github.com/snapszhot/lists-project/commit/dae94ce464af4cad17813f5ed565b3b656d58b5f)
+
+## [v1.0.3](https://github.com/snapszhot/lists-project/compare/v1.0.2...v1.0.3) (1 November 2022)
 
 -   Add sorting options to eligible films list [`fb51b91`](https://github.com/snapszhot/lists-project/commit/fb51b910eab015e4a5a5f2af2f5c724627ea2756)
 
