@@ -1,8 +1,44 @@
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Container, FilmList } from '@components/common'
 import styles from './FilmsOverview.module.scss'
 
 export default function FilmsOverview({ films, title, ...props }) {
+    const [sortedFilms, setSortedFilms] = useState(films)
+
+    const sortByDirector = (a, b) => a.director.localeCompare(b.director)
+    const sortByEngTitle = (a, b) => {
+        const aTitle =
+            a?.engTransTitle || a?.originalTitlePhonetic || a?.originalTitle
+        const bTitle =
+            b?.engTransTitle || b?.originalTitlePhonetic || b?.originalTitle
+
+        return aTitle.localeCompare(bTitle)
+    }
+    const sortByOrigTitle = (a, b) => {
+        const aTitle = a?.originalTitlePhonetic || a?.originalTitle
+        const bTitle = b?.originalTitlePhonetic || b?.originalTitle
+
+        return aTitle.localeCompare(bTitle)
+    }
+
+    const sortFilms = e => {
+        const sortMethod = e.target.value
+
+        let sortFunc = sortByDirector
+        if (sortMethod === 'Original Language Title') {
+            sortFunc = sortByOrigTitle
+        }
+        if (sortMethod === 'English Title') {
+            sortFunc = sortByEngTitle
+        }
+
+        const resortedFilms = [...sortedFilms]
+        resortedFilms.sort(sortFunc)
+
+        setSortedFilms(resortedFilms)
+    }
+
     return (
         <Container title={`${title} – Eligible Films`}>
             <p>
@@ -17,9 +53,14 @@ export default function FilmsOverview({ films, title, ...props }) {
             </p>
             <h2 className={styles.subtitle}>Eligible films</h2>
             <p className={styles.subtitleCaption}>
-                Sorted alphabetically by director’s name as written
+                Sort by
+                <select className={styles.sortField} onChange={sortFilms}>
+                    <option>Director</option>
+                    <option>Original Language Title</option>
+                    <option>English Title</option>
+                </select>
             </p>
-            <FilmList films={films} {...props} />
+            <FilmList films={sortedFilms} {...props} />
         </Container>
     )
 }

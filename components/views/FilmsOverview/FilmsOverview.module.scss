@@ -1,3 +1,5 @@
+@import 'inputs';
+
 .subtitle {
     margin-bottom: var(--spacing-sixth);
 }
@@ -5,4 +7,11 @@
 .subtitleCaption {
     color: var(--color-dark-grey);
     font-size: var(--font-size-small);
+}
+
+.sortField {
+    @extend %selectInput;
+    display: inline-block;
+    margin-left: var(--spacing-third);
+    padding: 0 var(--spacing-sixth);
 }
