@@ -1,6 +1,10 @@
 # Changelog
 
-## [v1.0.2](https://github.com/snapszhot/lists-project/compare/v1.0.1...v1.0.2)
+## [v1.0.3](https://github.com/snapszhot/lists-project/compare/v1.0.2...v1.0.3)
+
+-   Add sorting options to eligible films list [`fb51b91`](https://github.com/snapszhot/lists-project/commit/fb51b910eab015e4a5a5f2af2f5c724627ea2756)
+
+## [v1.0.2](https://github.com/snapszhot/lists-project/compare/v1.0.1...v1.0.2) (1 November 2022)
 
 -   Bump dependencies [`c9149e4`](https://github.com/snapszhot/lists-project/commit/c9149e415a7dac722028e3420c8a5765468e0076)
 -   Don’t check cookies when editing a ballot [`cabf0c2`](https://github.com/snapszhot/lists-project/commit/cabf0c2f91666439106703cc0786b81d23138cdb)
