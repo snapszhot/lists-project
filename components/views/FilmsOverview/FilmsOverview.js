@@ -10,12 +10,19 @@ export default function FilmsOverview({ films, title, ...props }) {
         string
             .replace('A ', '')
             .replace('An ', '')
+            .replace('Das ', '')
+            .replace('Der ', '')
             .replace('El ', '')
+            .replace('Gli ', '')
             .replace('Il ', '')
             .replace("L'", '')
             .replace('La ', '')
+            .replace('Las ', '')
             .replace('Le ', '')
             .replace('Les ', '')
+            .replace('Los ', '')
+            .replace('O ', '')
+            .replace('Os ', '')
             .replace('The ', '')
 
     const compareTitles = (a, b) => {
