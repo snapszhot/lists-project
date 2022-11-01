@@ -8,26 +8,20 @@ export default function EditPage(props) {
     return <Poll {...props} />
 }
 
-export async function getServerSideProps({ params, preview = false, req }) {
+export async function getServerSideProps({ params, preview = false }) {
     try {
-        const uid = req?.cookies[`list-${params.pollId}`] || null
-
-        if (!uid) {
-            return {
-                redirect: {
-                    destination: `/list/${params.pollId}?noBallot=true`,
-                    permanent: false,
-                },
-            }
-        }
-
         const list = await getSingleList(preview, params.pollId)
         const ballot = await getSubmittedBallot(params.ballotId)
 
-        if (list.poll_closed) {
+        if (list.poll_closed || !ballot) {
+            let url = `/list/${params.pollId}`
+            if (!ballot) {
+                url += '?noBallot=true'
+            }
+
             return {
                 redirect: {
-                    destination: `/list/${params.pollId}`,
+                    destination: url,
                     permanent: false,
                 },
             }
