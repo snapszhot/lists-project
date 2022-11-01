@@ -1,6 +1,11 @@
 # Changelog
 
-## [v1.0.1](https://github.com/snapszhot/lists-project/compare/v1.0.0...v1.0.1)
+## [v1.0.2](https://github.com/snapszhot/lists-project/compare/v1.0.1...v1.0.2)
+
+-   Bump dependencies [`c9149e4`](https://github.com/snapszhot/lists-project/commit/c9149e415a7dac722028e3420c8a5765468e0076)
+-   Don’t check cookies when editing a ballot [`cabf0c2`](https://github.com/snapszhot/lists-project/commit/cabf0c2f91666439106703cc0786b81d23138cdb)
+
+## [v1.0.1](https://github.com/snapszhot/lists-project/compare/v1.0.0...v1.0.1) (30 October 2022)
 
 -   Remove unneeded meta tags [`e598343`](https://github.com/snapszhot/lists-project/commit/e59834389aba4e06eb11437150027b612c08bdde)
 -   Shorten films page revalidation [`928cb4c`](https://github.com/snapszhot/lists-project/commit/928cb4cc612d2c74110db35d7943087c1d76302a)
