@@ -6,6 +6,25 @@ import styles from './FilmsOverview.module.scss'
 export default function FilmsOverview({ films, title, ...props }) {
     const [sortedFilms, setSortedFilms] = useState(films)
 
+    const stripArticles = string =>
+        string
+            .replace('A ', '')
+            .replace('An ', '')
+            .replace('El ', '')
+            .replace('Il ', '')
+            .replace("L'", '')
+            .replace('La ', '')
+            .replace('Le ', '')
+            .replace('Les ', '')
+            .replace('The ', '')
+
+    const compareTitles = (a, b) => {
+        const aTitle = stripArticles(a)
+        const bTitle = stripArticles(b)
+
+        return aTitle.localeCompare(bTitle)
+    }
+
     const sortByDirector = (a, b) => a.director.localeCompare(b.director)
     const sortByEngTitle = (a, b) => {
         const aTitle =
@@ -13,13 +32,13 @@ export default function FilmsOverview({ films, title, ...props }) {
         const bTitle =
             b?.engTransTitle || b?.originalTitlePhonetic || b?.originalTitle
 
-        return aTitle.localeCompare(bTitle)
+        return compareTitles(aTitle, bTitle)
     }
     const sortByOrigTitle = (a, b) => {
         const aTitle = a?.originalTitlePhonetic || a?.originalTitle
         const bTitle = b?.originalTitlePhonetic || b?.originalTitle
 
-        return aTitle.localeCompare(bTitle)
+        return compareTitles(aTitle, bTitle)
     }
 
     const sortFilms = e => {
