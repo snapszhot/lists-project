@@ -1,6 +1,11 @@
 # Changelog
 
-## [v1.0.4](https://github.com/snapszhot/lists-project/compare/v1.0.3...v1.0.4)
+## [v1.0.5](https://github.com/snapszhot/lists-project/compare/v1.0.4...v1.0.5)
+
+-   Bump dependencies [`07136bf`](https://github.com/snapszhot/lists-project/commit/07136bf6aa713931f649dd277b1acc054db41b55)
+-   Fetch new posts when using SSG [`13ccba0`](https://github.com/snapszhot/lists-project/commit/13ccba0860d2cd4d819f6c8aa2ed97201f41a128)
+
+## [v1.0.4](https://github.com/snapszhot/lists-project/compare/v1.0.3...v1.0.4) (1 November 2022)
 
 -   Strip articles in film list [`dae94ce`](https://github.com/snapszhot/lists-project/commit/dae94ce464af4cad17813f5ed565b3b656d58b5f)
 
